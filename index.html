@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/css/style.css">
     <script src="/js/script.js" defer></script>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="icon" href="/images/ico.png" type="image/png">
 </head>
 
 <body>
@@ -21,7 +22,6 @@
     <nav id="menu">
         <button id="abrir-tarefa">NOVA TAREFA</button>
         <h3>Categorias</h3>
-
         <ul id="menu-categorias">
             <li><button data-categoria="todas">Todas as tarefas</button></li>
             <li><button data-categoria="estudos">📚 Estudos</button></li>
@@ -69,8 +69,8 @@
         <button id="adicionar">Adicionar</button>
     </div>
     <main>
-        <section id="tarefas-andamento">
-            <h2>Em andamento</h2>
+        <section id="tarefas-pendentes">
+            <h2>Pendentes</h2>
             <div id="lista-tarefas"></div>
         </section>
         <section id="tarefas-concluidas">
@@ -78,14 +78,53 @@
             <div id="lista-concluidas"></div>
         </section>
         <section id="area-lixeira">
-    <h2>🗑️ Lixeira</h2>
-    <div id="lista-excluidas"></div>
-</section>
+            <div id="conteudo-lixeira">
+                <button id="fechar-lixeira">x</button>
+            <div id="lista-excluidas">
+                <h2>🗑️ Lixeira</h2>
+            </div>
+            </div>
+        </section>
     </main>
-    <aside>onboarding dashboarding</aside>
+<aside id="dashboard">
+    <h2>Meu progresso ✨</h2>
+    <section>
+        <h3>Resumo</h3>
+        <ul>
+            <li>📋 Total: <strong id="total-tarefas">0</strong></li>
+            <li>⏳ Pendentes: <strong id="total-pendentes">0</strong></li>
+            <li>✓ Concluídas: <strong id="total-concluidas">0</strong></li>
+        </ul>
+    </section>
+    <section>
+        <h3>Progresso</h3>
+        <progress id="barra-progresso" value="0" max="100"></progress>
+        <p><strong id="porcentagem-progresso">0%</strong> concluído</p>
+    </section>
+    <section>
+        <h3>Prioridades</h3>
+        <ul>
+            <li>🔴 Máxima <strong id="prioridade-maxima">0</strong></li>
+            <li>🟡 Média <strong id="prioridade-media">0</strong></li>
+            <li>🟢 Mínima <strong id="prioridade-minima">0</strong></li>
+        </ul>
+    </section>
+</aside>
+</aside>
     <footer>
         <p>Feito por Kerlyn Lopes</p>
     </footer>
+    <div id="fundo-modal-categoria">
+        <div id="modal-categoria">
+            <h2>Nova categoria</h2>
+            <label for="input-nome-categoria">Nome da categoria</label>
+            <input type="text" id="input-nome-categoria" placeholder="Ex.: Faculdade">
+            <div class="botoes-modal-categoria">
+                <button id="cancelar-modal-categoria">Cancelar</button>
+                <button id="salvar-modal-categoria">Criar categoria</button>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>
