@@ -335,10 +335,6 @@ main {
     padding: 10px;
 }
 
-#lista-concluidas .postit {
-    width: calc(50% - 10px);
-}
-
 #tarefas-pendentes,
 #tarefas-concluidas {
     background-color: #faf7fc;
@@ -582,32 +578,53 @@ footer p {
     margin: 0;
 }
 
-@media screen and (max-width: 768px) and (orientation: portrait) {
+/* TELAS ATÉ 800px - RETRATO */
+@media screen and (max-width: 800px) and (orientation: portrait) {
 
     body {
-        display: grid;
-        grid-template-areas:
-            "header header"
-            "nav nav"
-            "main main"
-            "aside aside"
-            "footer footer";
-        grid-template-columns: auto;
-        grid-template-rows: 200px auto auto auto 200px;
-    }
-}
-
-@media screen and (max-width: 480px) and (orientation: landscape) {
-
-    body {
-        display: grid;
         grid-template-areas:
             "header"
             "nav"
             "main"
             "aside"
             "footer";
-        grid-template-columns: auto;
-        grid-template-rows: 150px auto auto auto 100px;
+
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto auto 200px;
+    }
+
+    main {
+        grid-template-columns: 1fr;
+    }
+
+    #lista-tarefas,
+    #lista-concluidas {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .postit {
+        width: 240px;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+}
+
+
+/* TELAS ATÉ 480px - RETRATO */
+@media screen and (max-width: 480px) and (orientation: portrait) {
+
+    #lista-tarefas,
+    #lista-concluidas {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .postit {
+        width: 100%;
+        max-width: 240px;
     }
 }
