@@ -91,36 +91,61 @@ botaoSalvarModal.addEventListener("click", function () {
         inputNomeCategoria.focus();
         return;
     }
-
     let listaCategorias = document.querySelector("#menu-categorias");
     let novaOpcao = document.createElement("li");
     let novoBotao = document.createElement("button");
+    let botaoExcluirCategoria = document.createElement("button");
     let selectCategoria = document.querySelector("#categoria");
 
-    novoBotao.textContent = "📁 " + nomeCategoria;
-
-    novoBotao.dataset.categoria = nomeCategoria
+    let categoria = nomeCategoria
         .toLowerCase()
         .replace(/\s+/g, "-");
 
-    categorias.push(novoBotao.dataset.categoria);
+    novoBotao.textContent = "📁 " + nomeCategoria;
+    novoBotao.dataset.categoria = categoria;
+
+    botaoExcluirCategoria.textContent = "🗑️";
+    botaoExcluirCategoria.classList.add("excluir-categoria");
+
+    categorias.push(categoria);
     salvarCategorias();
 
     let novaOpcaoSelect = document.createElement("option");
 
-novaOpcaoSelect.value = novoBotao.dataset.categoria;
-novaOpcaoSelect.textContent = nomeCategoria;
+    novaOpcaoSelect.value = categoria;
+    novaOpcaoSelect.textContent = nomeCategoria;
 
-selectCategoria.appendChild(novaOpcaoSelect);
+    selectCategoria.appendChild(novaOpcaoSelect);
 
     ativarBotaoCategoria(novoBotao);
 
     novaOpcao.appendChild(novoBotao);
+    novaOpcao.appendChild(botaoExcluirCategoria);
 
     listaCategorias.insertBefore(
         novaOpcao,
         botaoCriarCategoria.parentElement
     );
+
+    botaoExcluirCategoria.addEventListener("click", function () {
+
+        let confirmar = confirm(
+            "Deseja excluir a categoria '" + nomeCategoria + "'? Obs.: A categoria será excluída, mas as tarefas continuarão salvas em Todas as tarefas."
+        );
+
+        if (!confirmar) {
+            return;
+        }
+
+        categorias = categorias.filter(function (item) {
+            return item !== categoria;
+        });
+
+        salvarCategorias();
+
+        novaOpcao.remove();
+        novaOpcaoSelect.remove();
+    });
 
     fundoModalCategoria.style.display = "none";
 });
@@ -169,17 +194,17 @@ function atualizarDashboard() {
 
     let maxima = tarefas.filter(function (tarefa) {
         return tarefa.prioridade === "maxima" &&
-               tarefa.excluida !== true;
+            tarefa.excluida !== true;
     }).length;
 
     let media = tarefas.filter(function (tarefa) {
         return tarefa.prioridade === "media" &&
-               tarefa.excluida !== true;
+            tarefa.excluida !== true;
     }).length;
 
     let minima = tarefas.filter(function (tarefa) {
         return tarefa.prioridade === "minima" &&
-               tarefa.excluida !== true;
+            tarefa.excluida !== true;
     }).length;
 
 
@@ -238,13 +263,38 @@ function carregarCategorias() {
 
         let novaOpcao = document.createElement("li");
         let novoBotao = document.createElement("button");
+        let botaoExcluirCategoria = document.createElement("button");
 
         novoBotao.textContent = "📁 " + categoria;
         novoBotao.dataset.categoria = categoria;
 
+        botaoExcluirCategoria.textContent = "🗑️";
+        botaoExcluirCategoria.classList.add("excluir-categoria");
+
         ativarBotaoCategoria(novoBotao);
 
         novaOpcao.appendChild(novoBotao);
+        novaOpcao.appendChild(botaoExcluirCategoria);
+
+        botaoExcluirCategoria.addEventListener("click", function () {
+
+            let confirmar = confirm(
+                "Deseja excluir a categoria '" + categoria + "'?"
+            );
+
+            if (!confirmar) {
+                return;
+            }
+
+            categorias = categorias.filter(function (item) {
+                return item !== categoria;
+            });
+
+            salvarCategorias();
+
+            novaOpcao.remove();
+            novaOpcaoSelect.remove();
+        });
 
         listaCategorias.insertBefore(
             novaOpcao,
@@ -261,12 +311,12 @@ function carregarCategorias() {
 }
 carregarCategorias();
 
-function formatarData(data) { 
-    if (!data) { 
-        return ""; 
-    } 
-    let partes = data.split("-"); 
-    return `${partes[2]}/${partes[1]}/${partes[0]}`; 
+function formatarData(data) {
+    if (!data) {
+        return "";
+    }
+    let partes = data.split("-");
+    return `${partes[2]}/${partes[1]}/${partes[0]}`;
 }
 
 filtrarTarefas("todas");
@@ -330,34 +380,34 @@ function criarPostit(tarefa) {
     botaoExcluir.textContent = "Excluir";
     botaoExcluir.classList.add("excluir");
 
-postit.appendChild(botaoExcluir);
-botaoExcluir.addEventListener("click", function () {
-    tarefa.excluida = true;
+    postit.appendChild(botaoExcluir);
+    botaoExcluir.addEventListener("click", function () {
+        tarefa.excluida = true;
 
-    salvarTarefas();
-
-    postit.remove();
-    criarPostit(tarefa);
-    atualizarDashboard();
-});
-
-if (tarefa.concluida !== true) {
-
-    let botaoConcluir = document.createElement("button");
-    botaoConcluir.textContent = "Concluir";
-    botaoConcluir.classList.add("concluir");
-
-    postit.insertBefore(botaoConcluir, botaoExcluir);
-
-    botaoConcluir.addEventListener("click", function () {
-        tarefa.concluida = true;
         salvarTarefas();
 
         postit.remove();
         criarPostit(tarefa);
         atualizarDashboard();
     });
-}
+
+    if (tarefa.concluida !== true) {
+
+        let botaoConcluir = document.createElement("button");
+        botaoConcluir.textContent = "Concluir";
+        botaoConcluir.classList.add("concluir");
+
+        postit.insertBefore(botaoConcluir, botaoExcluir);
+
+        botaoConcluir.addEventListener("click", function () {
+            tarefa.concluida = true;
+            salvarTarefas();
+
+            postit.remove();
+            criarPostit(tarefa);
+            atualizarDashboard();
+        });
+    }
     if (tarefa.concluida === true) {
         document.querySelector("#lista-concluidas").appendChild(postit);
     } else {
@@ -381,7 +431,7 @@ botao.addEventListener("click", function () {
         concluida: false,
         excluida: false
     };
-    
+
     tarefas.push(tarefa);
     salvarTarefas();
     criarPostit(tarefa);

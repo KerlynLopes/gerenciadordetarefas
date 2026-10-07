@@ -134,6 +134,26 @@ nav {
     gap: 10px;
 }
 
+#menu-categorias li {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+#menu-categorias li button:first-child {
+    flex: 1;
+}
+
+#menu-categorias .excluir-categoria {
+    width: auto;
+    flex: 0;
+    padding: 4px 6px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 14px;
+}
+
 #menu-categorias button {
     width: 100%;
     padding: 12px;
