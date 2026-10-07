@@ -1,3 +1,15 @@
+let botaoCadastro = document.querySelector("#abrir-cadastro");
+let fundoCadastro = document.querySelector("#fundo-cadastro");
+let botaoFecharCadastro = document.querySelector("#fechar-cadastro");
+
+botaoCadastro.addEventListener("click", function () {
+    fundoCadastro.style.display = "flex";
+});
+
+botaoFecharCadastro.addEventListener("click", function () {
+    fundoCadastro.style.display = "none";
+});
+
 let tarefas = [];
 
 let categorias = [
