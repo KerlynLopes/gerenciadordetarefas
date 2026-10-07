@@ -431,36 +431,42 @@ botao.addEventListener("click", function () {
         concluida: false,
         excluida: false
     };
-
+    
     tarefas.push(tarefa);
     salvarTarefas();
     criarPostit(tarefa);
     ordenarPostits();
     atualizarDashboard();
 
+    document.querySelector("#titulo").value = "";
+    document.querySelector("#descricao").value = "";
+    document.querySelector("#data-limite").value = "";
+    document.querySelector('input[name="prioridade"]:checked').checked = false;
+    document.querySelector("#categoria").value = "";
+
     novaTarefa.style.display = "none";
     fundoModal.style.display = "none";
+
 });
+    let botaoLixeira = document.querySelector("#abrir-lixeira");
+    let areaLixeira = document.querySelector("#area-lixeira");
 
-let botaoLixeira = document.querySelector("#abrir-lixeira");
-let areaLixeira = document.querySelector("#area-lixeira");
-
-botaoLixeira.addEventListener("click", function () {
-    areaLixeira.style.display = "flex";
-});
-
-let botaoFecharLixeira = document.querySelector("#fechar-lixeira");
-
-botaoFecharLixeira.addEventListener("click", function () {
-    areaLixeira.style.display = "none";
-});
-
-let tarefasSalvas = localStorage.getItem("tarefas");
-if (tarefasSalvas !== null) {
-    tarefas = JSON.parse(tarefasSalvas);
-    tarefas.forEach(function (tarefa) {
-        criarPostit(tarefa);
+    botaoLixeira.addEventListener("click", function () {
+        areaLixeira.style.display = "flex";
     });
-    ordenarPostits();
-}
-atualizarDashboard();
+
+    let botaoFecharLixeira = document.querySelector("#fechar-lixeira");
+
+    botaoFecharLixeira.addEventListener("click", function () {
+        areaLixeira.style.display = "none";
+    });
+
+    let tarefasSalvas = localStorage.getItem("tarefas");
+    if (tarefasSalvas !== null) {
+        tarefas = JSON.parse(tarefasSalvas);
+        tarefas.forEach(function (tarefa) {
+            criarPostit(tarefa);
+        });
+        ordenarPostits();
+    }
+    atualizarDashboard();
